@@ -5,3 +5,20 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+
+Post.destroy_all
+
+200.times do
+    created_at = Faker::Date.backward(days: 365 * 3)
+    RANDOM_100_CHARS = "hello world hello world hello world hello world hello world hello world hello world hello hello worl hello world hello world"
+
+    p = Post.create(
+        title: Faker::Commerce.vendor,
+        body: Faker::Company.catch_phrase,
+        created_at: created_at,
+        updated_at: created_at
+    )
+end
+
+posts = Post.all
+puts Cowsay.say("Generated #{posts.count} posts", :dragon)
