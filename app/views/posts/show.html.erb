@@ -1,0 +1,30 @@
+<div class="card m-3 border-0">
+    <div class="card-body" id="postCard">
+        <h1 class="card-title"><%=@post.title%> </h1>
+        <p class="card-text"><%=@post.body%> </p>
+        <p><small>Posted <%= time_ago_in_words(@post.created_at) %></small></p>
+        <div class="d-flex">
+            <%= button_to 'Edit', edit_post_path(@post.id), method: :get, class:"btn btn-outline-primary" %>
+            <%= button_to 'Delete', post_path(@post), method: :delete, class:"btn btn-outline-primary mx-1" %>
+        </div>
+    </div>
+    <div class="card-body" id="commentFormCard">
+        <%=form_with(model: [@post, @comment]) do |form|%>
+            <div class="form-group">
+            <h2>Comment</h2>
+            <%= form.text_area :body, class:"form-control" %>
+            </div>
+        <%= form.submit "Submit", class:"btn btn-outline-primary my-3"%>
+        <% end %>
+    </div>
+    <% @comments.each do |comment|%>
+    <div class="card-body" id="commentsCard">
+        <p class="card-text"><%= comment.body%> </p>
+        <div class="d-flex">
+            <div class="d-flex align-items-center"><small class="me-2">Commented <%= time_ago_in_words(comment.created_at)%></small>&#x2022;</div>
+            <%= button_to 'Delete', post_comment_path(@post.id, comment.id), method: :delete, class:"btn btn-link btn-sm text-decoration-none" %>
+        </div>
+    </div>
+    <%end%>
+</div>
+

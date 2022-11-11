@@ -8,16 +8,20 @@
 
 Post.destroy_all
 
-200.times do
+50.times do
     created_at = Faker::Date.backward(days: 365 * 3)
-    RANDOM_100_CHARS = "hello world hello world hello world hello world hello world hello world hello world hello hello worl hello world hello world"
+    # RANDOM_100_CHARS = "hello world hello world hello world hello world hello world hello world hello world hello hello worl hello world hello world"
 
     p = Post.create(
-        title: Faker::Commerce.vendor,
-        body: Faker::Company.catch_phrase,
+        title: Faker::Hacker.say_something_smart,
+        body: Faker::ChuckNorris.fact,
         created_at: created_at,
         updated_at: created_at
     )
+
+    rand(1..5).times do
+        Comment.create(body: Faker::Hacker.say_something_smart, post: p)
+    end
 end
 
 posts = Post.all
