@@ -9,8 +9,25 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
-
+    <nav class="navbar navbar-light text-primary mt-2">
+        <a class="navbar-brand text-primary mx-4" href="<%= root_path %>">Blog on Rails</a>
+        <div id="navbarSupportedContent">
+          <ul class="list-inline center mx-4">
+            <li class="list-inline-item">
+              <a class="nav-link" href="<%= root_path %>">Home</a>
+            </li>         
+            <li class="list-inline-item">
+              <a class="nav-link" href="<%= new_post_path %>">New Post</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
   <body>
+    <% flash.each do |type, message| %>
+      <div class="alert alert-info" role=alert >
+      <%= message %>
+      </div>
+    <% end %>
     <%= yield %>
   </body>
 </html>
