@@ -19,6 +19,15 @@
             <li class="list-inline-item">
               <a class="nav-link" href="<%= new_post_path %>">New Post</a>
             </li>
+            <li class="list-inline-item">
+              <a class="nav-link" href="<%= new_user_path %>">Sign Up</a>
+            </li>
+            <li class="list-inline-item">
+              <a class="nav-link" href="<%= new_session_path %>">Sign In</a>
+            </li>
+            <li class="list-inline-item">
+              <a class="nav-link" href="<%= edit_user_path(current_user.id) %>">Modify Account</a>
+            </li>
           </ul>
         </div>
       </nav>
