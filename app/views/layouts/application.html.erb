@@ -19,15 +19,22 @@
             <li class="list-inline-item">
               <a class="nav-link" href="<%= new_post_path %>">New Post</a>
             </li>
+            <% if user_signed_in? %>
+            <li class="list-inline-item">
+              <a class="nav-link" href="<%= edit_user_path(current_user) %>"><%=current_user.name%></a>
+            </li>
+            <li class="list-inline-item">
+              <%= button_to 'Sign-Out', session_path(current_user), method: :delete, class:"btn btn-primary"%>
+            </li>
+            <% else %>
             <li class="list-inline-item">
               <a class="nav-link" href="<%= new_user_path %>">Sign Up</a>
             </li>
             <li class="list-inline-item">
-              <a class="nav-link" href="<%= new_session_path %>">Sign In</a>
+              <%= button_to 'Sign-in', new_session_path, method: :get, class:"btn btn-primary"%>
             </li>
-            <li class="list-inline-item">
-              <a class="nav-link" href="<%= edit_user_path(current_user.id) %>">Modify Account</a>
-            </li>
+            <% end %>
+            
           </ul>
         </div>
       </nav>

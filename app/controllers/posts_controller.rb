@@ -1,6 +1,8 @@
 class PostsController < ApplicationController
 
     before_action :find_post, only: [:show, :destroy, :edit, :update]
+    before_action :authenticate_user!, except: [:index, :show]
+    before_action :authorize_user!, only:[:edit, :update, :destroy]
 
     def new
         @post = Post.new
@@ -8,7 +10,8 @@ class PostsController < ApplicationController
 
     def create
         @post = Post.new(post_params)
-        
+        @post.user = current_user
+
         if @post.save
             flash.alert = "New post created"
             redirect_to @post
@@ -32,6 +35,8 @@ class PostsController < ApplicationController
     end
 
     def update
+        @post.user = current_user
+
         if @post.update(post_params)
             flash.alert = "Post updated successfully"
             redirect_to @post
@@ -55,5 +60,9 @@ class PostsController < ApplicationController
 
     def post_params
         params.require(:post).permit(:title, :body)
+    end
+
+    def authorize_user!
+        redirect_to root_path, alert: "Not authorized!" unless can?(:crud, @post)
     end
 end

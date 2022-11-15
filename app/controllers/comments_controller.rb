@@ -1,10 +1,13 @@
 class CommentsController < ApplicationController
 
     before_action :find_post
+    before_action :authenticate_user!
+    before_action :authorize_user!, only:[:destroy]
 
     def create
         @comment = Comment.new(comment_params)
         @comment.post = @post
+        @comment.user = current_user
         
         if @comment.save
             flash.alert = "Comment posted"
@@ -39,5 +42,7 @@ class CommentsController < ApplicationController
         params.require(:comment).permit(:body)
     end
 
-    
+    def authorize_user!
+        redirect_to root_path, alert: "Not Authorized!" unless can?(:crud, @comment)
+    end
 end
